@@ -3,7 +3,7 @@ import clientService from '../services/client.service.js'
 async function creatClient(req, res, next) {
     try {
         let client = req.body
-        if (!client.name || !client.cnpj || !client.phone || !client.email || !client.address) {
+        if (!client.name || !client.cpf || !client.phone || !client.email || !client.address) {
             throw new Error("name, CNPJ, phone, email e adress são obrigatórios.")
         }
         //clientService
@@ -45,7 +45,7 @@ async function deleteClient(req, res, next){
 async function updateClient(req, res, next){
     try{
         let client = req.body
-        if(!client.client_id || !client.name || !client.cnpj || !client.phone || !client.email || !client.address){
+        if(!client.clientId || !client.name || !client.cpf || !client.phone || !client.email || !client.address){
             throw new Error('Informe o id do cliente.')
         }
 

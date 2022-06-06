@@ -2,7 +2,7 @@ import productRepositorie from '../repositories/product.repositorie.js'
 import supplierRepositorie from '../repositories/supplier.repositorie.js'
 
 async function creatProduct(product) {
-    if (await supplierRepositorie.getSupplier(product.supplier_id)){
+    if (await supplierRepositorie.getSupplier(product.supplierId)){
         return await productRepositorie.insertProduct(product)
     }
     throw new Error('supplier_id informado não existe.')
@@ -21,7 +21,7 @@ async function deleteProduct(id){
 }
 
 async function updateProduct(product){
-    if (await supplierRepositorie.getSupplier(product.supplier_id)){
+    if (await supplierRepositorie.getSupplier(product.supplierId)){
         return await productRepositorie.updateProduct(product)
     }
     throw new Error('supplier_id informado não existe.')

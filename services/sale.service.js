@@ -4,11 +4,11 @@ import productRepositorie from '../repositories/product.repositorie.js'
 
 async function creatSale(sale) {
     const error = []
-    if(!await clientRepositorie.getClient(sale.client_id)){
+    if(!await clientRepositorie.getClient(sale.clientId)){
         error.push('client_id não existe.')
     }
 
-    const product = await productRepositorie.getProduct(sale.product_id)
+    const product = await productRepositorie.getProduct(sale.productId)
     if(!product){
         error.push('product_id não existe.')
     }
@@ -26,11 +26,14 @@ async function creatSale(sale) {
     }
 }
 
-async function getSales(productID) {
-    if (productID){
-        return saleRepositorie.getSalesByProductId(productID)
+async function getSales(productId, supplierId) {
+    if (productId){
+        return await saleRepositorie.getSalesByProductId(productId)
     }
-    return saleRepositorie.getSales()
+    if (supplierId){
+        return await saleRepositorie.getSalesBySupplierId(supplierId)
+    }
+    return await saleRepositorie.getSales()
 }
 
 async function getSale(id) {
@@ -41,7 +44,7 @@ async function deleteSale(id) {
     const sale = await saleRepositorie.getSale(id)
     if(sale){
         const res = await saleRepositorie.deleteSale(id)
-        let product = await productRepositorie.getProduct(sale.product_id)
+        let product = await productRepositorie.getProduct(sale.productId)
         product.stok++
         await productRepositorie.updateProduct(product)
         return res
@@ -52,10 +55,10 @@ async function deleteSale(id) {
 
 async function updateSale(sale) {
     const error = []
-    if(!await saleRepositorie.getSale(sale.sale_id)){
+    if(!await saleRepositorie.getSale(sale.saleId)){
         error.push('sale_id não existe.')
     }
-    if(!await clientRepositorie.getClient(sale.client_id)){
+    if(!await clientRepositorie.getClient(sale.clientId)){
         error.push('client_id não existe.')
     }
     if(error.length >  0){
